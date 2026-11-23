@@ -3,23 +3,235 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#2a1a10">
-<title>Thekua</title>
+<meta name="theme-color" content="#fbf3e8">
+<title>Chhath Prasad</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-:root{color-scheme:dark;--bg-top:#3a2414;--bg-bottom:#1a100a}
-html,body{height:100%;margin:0;overflow:hidden;background:var(--bg-bottom)}
-body{background:radial-gradient(90% 70% at 50% 45%,var(--bg-top),var(--bg-bottom))}
-#stage{display:block;width:100%;height:100%;touch-action:none;cursor:grab}
-#stage:active{cursor:grabbing}
+/* Layout: phone-width store screen; a full-viewport overlay presents the prasad on top. */
+:root{
+  color-scheme:light;
+  --bg:#fbf3e8; --surface:#ffffff; --ink:#2a1a0f; --muted:#8a7360; --line:#efe2cf;
+  --saffron:#e8730c; --saffron-soft:#fde7cf; --leaf:#2f7d3a; --ray:#ffe11a;
+  --display:"DM Serif Display",Georgia,serif; --sans:Outfit,system-ui,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html,body{height:100%}
+body{background:var(--bg);color:var(--ink);font:15px/1.35 var(--sans)}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+
+/* ---------- store screen ---------- */
+.app{max-width:430px;margin:0 auto;padding:calc(env(safe-area-inset-top) + 14px) 16px calc(env(safe-area-inset-bottom) + 90px)}
+.head{display:flex;align-items:center;gap:12px}
+.head h1{font:700 26px/1.1 var(--sans);letter-spacing:-.01em}
+.head p{color:var(--muted);font-size:13px;margin-top:3px}
+.head p b{color:var(--ink);font-weight:600}
+.avatar{margin-left:auto;width:40px;height:40px;border-radius:50%;background:var(--saffron-soft);display:grid;place-items:center;color:var(--saffron)}
+.search{display:flex;align-items:center;gap:10px;margin-top:14px;height:48px;padding:0 14px;border-radius:14px;background:var(--surface);border:1px solid var(--line);color:var(--muted)}
+.days{display:flex;gap:8px;overflow-x:auto;margin:14px -16px 0;padding:0 16px 2px;scrollbar-width:none}
+.days::-webkit-scrollbar{display:none}
+.day{flex:none;padding:8px 14px;border-radius:20px;border:1px solid var(--line);background:var(--surface);font-size:13px;font-weight:500;white-space:nowrap}
+.day.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+.hero{position:relative;margin-top:16px;height:150px;border-radius:18px;overflow:hidden;color:#fff;
+  background:linear-gradient(180deg,#ffb04a 0%,#ff8a3d 45%,#c94a16 100%)}
+.hero svg{position:absolute;inset:0;width:100%;height:100%}
+.hero .txt{position:absolute;left:18px;top:22px}
+.hero small{font-size:11px;letter-spacing:.3em;font-weight:600;opacity:.85}
+.hero h2{font:italic 34px/1 var(--display);margin-top:4px;text-shadow:0 2px 10px #7a2a0055}
+.hero span{display:block;font-size:13px;margin-top:6px;opacity:.9}
+.cats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:16px}
+.cat{display:flex;flex-direction:column;align-items:center;gap:6px;padding:10px 4px;border-radius:14px;background:var(--surface);border:1px solid var(--line);font-size:12px;font-weight:500;text-align:center;line-height:1.2}
+.cat svg{width:40px;height:40px}
+.promo{display:flex;align-items:center;gap:14px;width:100%;margin-top:16px;padding:12px 14px;border-radius:16px;text-align:left;
+  background:linear-gradient(110deg,#2a1a0f,#4a2a14);color:#fff}
+.promo img{width:46px;filter:drop-shadow(0 4px 8px #0008)}
+.promo b{display:block;font:22px/1 var(--display);color:var(--ray)}
+.promo span{font-size:12.5px;opacity:.8}
+.promo i{margin-left:auto;font-style:normal;font-size:22px;color:var(--ray)}
+.sec{display:flex;align-items:baseline;margin:22px 0 10px}
+.sec h3{font:italic 24px var(--display)}
+.sec a{margin-left:auto;color:var(--saffron);font-size:13px;font-weight:600;text-decoration:none}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:10px;display:flex;flex-direction:column;min-width:0}
+.pic{position:relative;aspect-ratio:1;border-radius:12px;background:var(--saffron-soft);display:grid;place-items:center;max-width:100%}
+.pic img,.pic svg{width:62%;height:62%;object-fit:contain}
+.add{position:absolute;right:8px;bottom:-12px;padding:6px 16px;border-radius:10px;background:var(--surface);border:1.5px solid var(--leaf);color:var(--leaf);font-weight:700;font-size:13px;box-shadow:0 3px 8px #0001}
+.card small{color:var(--muted);font-size:12px;margin-top:18px}
+.card b{font-weight:600;font-size:14px;line-height:1.25;margin-top:2px}
+.price{margin-top:6px;font-weight:700;font-variant-numeric:tabular-nums}
+.price s{color:var(--muted);font-weight:400;font-size:12px;margin-left:4px}
+.nav{position:fixed;left:0;right:0;bottom:0;display:flex;justify-content:center;background:#fffdf9ee;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom)}
+.nav div{display:flex;width:100%;max-width:430px}
+.nav button{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;padding:10px 0;font-size:12px;color:var(--muted)}
+.nav button.on{color:var(--ink);font-weight:600}
+
+/* ---------- presenting overlay ---------- */
+.ov{position:fixed;inset:0;z-index:10;background:rgba(14,10,6,.72);opacity:0;visibility:hidden;transition:opacity .7s,visibility 0s .7s}
+.ov.show{opacity:1;visibility:visible;transition:opacity .7s}
+.ov canvas{position:absolute;inset:0;width:100%;height:100%}
+#stage{touch-action:none;cursor:grab}
+.title{position:absolute;left:0;right:0;top:68%;display:flex;flex-direction:column;align-items:center;pointer-events:none;
+  opacity:0;transform:translateY(16px);transition:opacity .8s .9s,transform .8s .9s}
+.ov.show .title{opacity:1;transform:none}
+.pre{display:flex;align-items:center;gap:14px;color:#fff;font:500 13px var(--sans);letter-spacing:.38em}
+.pre::before,.pre::after{content:"";width:64px;height:1.5px;background:linear-gradient(90deg,transparent,var(--ray));box-shadow:0 0 8px var(--ray),0 0 2px #fff}
+.pre::after{background:linear-gradient(270deg,transparent,var(--ray))}
+.name{position:relative;margin-top:10px;width:270px;height:118px}
+.name .c{position:absolute;left:0;top:0;font:72px/1 var(--display);color:var(--ray);text-shadow:0 0 18px #ffe11a88,0 0 42px #ffd00044}
+.name .p{position:absolute;right:0;bottom:0;font:700 54px/1 var(--sans);color:#fff;letter-spacing:-.01em;text-shadow:0 2px 14px #0008}
+.close{position:absolute;right:max(16px,env(safe-area-inset-right));top:calc(env(safe-area-inset-top) + 14px);width:40px;height:40px;border-radius:50%;
+  display:grid;place-items:center;color:#fff;background:#ffffff1a;border:1px solid #ffffff33}
+@media (prefers-reduced-motion:reduce){.title{transition:none}}
 </style>
 </head>
 <body>
-<canvas id="stage" aria-label="3D thekua. Tilt your phone or drag to turn it."></canvas>
+<main class="app">
+  <header class="head">
+    <div><h1>Chhath Puja</h1><p><b>Home</b> &middot; samagri delivered before Arghya</p></div>
+    <div class="avatar" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7z"/></svg></div>
+  </header>
+
+  <label class="search"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg><span>Search "soop", "thekua", "sugarcane"</span></label>
+
+  <nav class="days" aria-label="Puja days">
+    <button class="day on">All</button><button class="day">Nahay Khay</button><button class="day">Kharna</button><button class="day">Sandhya Arghya</button><button class="day">Usha Arghya</button>
+  </nav>
+
+  <section class="hero">
+    <svg viewBox="0 0 400 150" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+      <circle cx="300" cy="98" r="34" fill="#fff3c4" opacity=".95"/><circle cx="300" cy="98" r="52" fill="#fff3c4" opacity=".18"/>
+      <rect x="0" y="104" width="400" height="46" fill="#9b3a12" opacity=".55"/>
+      <g stroke="#ffd9a0" stroke-width="2" stroke-linecap="round" opacity=".7"><path d="M262 114h76M276 124h48M288 134h24"/></g>
+      <path d="M0 104q60-14 120 0t120 0 160 0v4H0z" fill="#7a2a0c" opacity=".6"/>
+    </svg>
+    <div class="txt"><small>CELEBRATE</small><h2>Chhath Puja</h2><span>Everything for all four days</span></div>
+  </section>
+
+  <div class="cats">
+    <div class="cat"><svg viewBox="0 0 40 40"><path d="M8 18h24l-3 14H11z" fill="#c98a3c"/><path d="M8 18h24" stroke="#8a5a20" stroke-width="2"/><circle cx="14" cy="15" r="4" fill="#f2a516"/><circle cx="22" cy="13" r="5" fill="#e0402a"/><circle cx="29" cy="15" r="3.5" fill="#7cb342"/></svg>Arghya Needs</div>
+    <div class="cat"><svg viewBox="0 0 40 40"><path d="M6 30Q6 8 20 6q14 2 14 24z" fill="#d9a35b"/><path d="M10 28 20 9l10 19M15 29l5-20 5 20" stroke="#a8712f" stroke-width="1.2" fill="none"/><rect x="6" y="29" width="28" height="4" rx="2" fill="#a8712f"/></svg>Soop &amp; Daura</div>
+    <div class="cat"><svg viewBox="0 0 40 40"><g fill="#5c9a3a"><rect x="9" y="4" width="5" height="32" rx="2.5"/><rect x="17.5" y="6" width="5" height="30" rx="2.5"/><rect x="26" y="4" width="5" height="32" rx="2.5"/></g><g stroke="#2f6a20" stroke-width="1.5"><path d="M9 14h5M9 25h5M17.5 16h5M17.5 27h5M26 12h5M26 23h5"/></g></svg>Sugarcane &amp; Fruits</div>
+    <div class="cat"><img src="assets/front-cut.png" alt="" style="width:30px;height:40px;object-fit:contain">Thekua Kitchen</div>
+  </div>
+
+  <button class="promo" id="reopen"><img src="assets/front-cut.png" alt=""><div><b>Chhath prasad</b><span>Tap to see it in 3D</span></div><i>&rsaquo;</i></button>
+
+  <div class="sec"><h3>Prasad Picks</h3><a href="#">See all</a></div>
+  <div class="grid">
+    <article class="card"><div class="pic"><img src="assets/front-cut.png" alt="Thekua"><button class="add">ADD</button></div><small>500 g</small><b>Fresh Ghee Thekua</b><div class="price">&#8377;149<s>&#8377;199</s></div></article>
+    <article class="card"><div class="pic"><svg viewBox="0 0 40 40"><path d="M4 32Q4 6 20 4q16 2 16 28z" fill="#d9a35b"/><path d="M9 30 20 7l11 23M14 31l6-24 6 24" stroke="#a8712f" stroke-width="1" fill="none"/><rect x="4" y="31" width="32" height="5" rx="2.5" fill="#a8712f"/></svg><button class="add">ADD</button></div><small>1 pc</small><b>Bamboo Soop</b><div class="price">&#8377;129<s>&#8377;160</s></div></article>
+    <article class="card"><div class="pic"><svg viewBox="0 0 40 40"><g fill="#5c9a3a"><rect x="8" y="2" width="5" height="36" rx="2.5"/><rect x="15" y="4" width="5" height="34" rx="2.5"/><rect x="22" y="2" width="5" height="36" rx="2.5"/><rect x="29" y="5" width="5" height="33" rx="2.5"/></g><g stroke="#2f6a20" stroke-width="1.5"><path d="M8 12h5M8 26h5M15 15h5M15 29h5M22 10h5M22 24h5M29 17h5M29 31h5"/></g><path d="M5 22h32" stroke="#c0392b" stroke-width="2.5"/></svg><button class="add">ADD</button></div><small>Bundle of 5</small><b>Sugarcane for Kosi</b><div class="price">&#8377;99</div></article>
+    <article class="card"><div class="pic"><svg viewBox="0 0 40 40"><rect x="10" y="8" width="20" height="5" rx="2" fill="#c98a3c"/><path d="M9 14h22v20a4 4 0 0 1-4 4H13a4 4 0 0 1-4-4z" fill="#fff6dc" stroke="#d9b56a"/><path d="M9 22h22v12a4 4 0 0 1-4 4H13a4 4 0 0 1-4-4z" fill="#f5c542"/></svg><button class="add">ADD</button></div><small>1 L</small><b>Pure Desi Ghee</b><div class="price">&#8377;649<s>&#8377;720</s></div></article>
+    <article class="card"><div class="pic"><svg viewBox="0 0 40 40"><path d="M6 22l8-6 10 3-8 6z" fill="#b5722c"/><path d="M6 22v8l10 3v-8z" fill="#8a5220"/><path d="M16 25v8l8-6v-8z" fill="#9c6024"/><path d="M18 12l8-6 10 3-8 6z" fill="#c4823a"/><path d="M18 12v8l10 3v-8z" fill="#94581f"/><path d="M28 15v8l8-6V9z" fill="#a8692a"/></svg><button class="add">ADD</button></div><small>1 kg</small><b>Organic Jaggery</b><div class="price">&#8377;89</div></article>
+    <article class="card"><div class="pic"><svg viewBox="0 0 40 40"><path d="M20 6c3 5 4 8 0 12-4-4-3-7 0-12z" fill="#ffb020"/><path d="M20 10c1.5 3 2 5 0 7-2-2-1.5-4 0-7z" fill="#fff1a8"/><path d="M5 22h30c-2 8-8 12-15 12S7 30 5 22z" fill="#b5522c"/><path d="M5 22h30" stroke="#7a3216" stroke-width="2"/></svg><button class="add">ADD</button></div><small>Set of 12</small><b>Clay Diya for Ghat</b><div class="price">&#8377;59<s>&#8377;80</s></div></article>
+  </div>
+</main>
+
+<nav class="nav"><div>
+  <button class="on"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M3 11 12 3l9 8v10h-6v-6H9v6H3z"/></svg>Home</button>
+  <button><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="4"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M5 19l2-2M17 7l2-2"/></svg>Puja Days</button>
+  <button><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 8h14l-1 12H6z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg>Cart</button>
+</div></nav>
+
+<div class="ov" id="ov" aria-hidden="true">
+  <canvas id="fx"></canvas>
+  <canvas id="stage" aria-label="3D thekua. Tilt your phone or drag to turn it."></canvas>
+  <div class="title"><div class="pre">PRESENTING</div><div class="name"><span class="c">Chhath</span><span class="p">prasad</span></div></div>
+  <button class="close" id="close" aria-label="Close"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+</div>
 
 <script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js"}}</script>
 <script type="module">
 import * as THREE from 'three';
 
+const ov = document.getElementById('ov');
+const CY = 0.40;                                   // vertical centre of rays + thekua, as a share of screen height
+const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+let shownAt = -1, open = false;
+
+/* ================= light: glowing rays, faint Tyndall shafts, motes ================= */
+const fx = document.getElementById('fx'), g = fx.getContext('2d');
+let vw = 0, vh = 0, dpr = 1, rayLayers = [];
+function bakeRays(seed, n, alpha) {                // pre-render glowing rays once; frames only rotate them
+  const S = 900, c = document.createElement('canvas'); c.width = c.height = S;
+  const x = c.getContext('2d'); let r = seed;
+  const rnd = () => (r = (r * 9301 + 49297) % 233280) / 233280;
+  x.translate(S / 2, S / 2); x.globalCompositeOperation = 'lighter';
+  for (let i = 0; i < n; i++) {
+    const a = (i / n) * Math.PI * 2 + rnd() * 0.25, w = 0.03 + rnd() * 0.07, len = S * (0.28 + rnd() * 0.22);
+    const grd = x.createRadialGradient(0, 0, 0, 0, 0, len);
+    grd.addColorStop(0, `rgba(255,250,200,${alpha})`); grd.addColorStop(0.25, `rgba(255,225,26,${alpha * 0.9})`);
+    grd.addColorStop(1, 'rgba(255,200,0,0)');
+    x.fillStyle = grd; x.shadowColor = 'rgba(255,214,0,0.9)'; x.shadowBlur = 28;
+    x.beginPath(); x.moveTo(0, 0); x.arc(0, 0, len, a - w, a + w); x.closePath(); x.fill();
+  }
+  return c;
+}
+rayLayers = [bakeRays(7, 14, 0.72), bakeRays(42, 10, 0.38)];
+
+const motes = Array.from({ length: 46 }, () => newMote(true));
+function newMote(anywhere) {
+  return { x: Math.random(), y: anywhere ? Math.random() : 1.05, r: 0.6 + Math.random() * 1.6,
+    vy: 0.008 + Math.random() * 0.02, vx: (Math.random() - 0.5) * 0.006, ph: Math.random() * 6.28, tw: 1 + Math.random() * 2 };
+}
+const sparks = Array.from({ length: 22 }, () => newSpark());
+function newSpark() { const a = Math.random() * 6.28; return { a, d: 0.05 + Math.random() * 0.1, v: 0.02 + Math.random() * 0.05, life: Math.random(), r: 0.8 + Math.random() * 1.4 }; }
+
+function sizeFx() { dpr = Math.min(devicePixelRatio, 2); vw = innerWidth; vh = innerHeight; fx.width = vw * dpr; fx.height = vh * dpr; g.setTransform(dpr, 0, 0, dpr, 0, 0); }
+addEventListener('resize', sizeFx); sizeFx();
+
+function drawFx(t, dt) {
+  g.clearRect(0, 0, vw, vh);
+  const cx = vw / 2, cy = vh * CY, k = Math.min(1, Math.max(0, (t - shownAt) / 0.9)), ease = 1 - Math.pow(1 - k, 3);
+  g.globalCompositeOperation = 'lighter';
+
+  // Tyndall: a few very faint shafts from the top-left, drifting slowly
+  for (let i = 0; i < 4; i++) {
+    const sway = Math.sin(t * 0.15 + i * 1.7) * 0.04;
+    g.save(); g.translate(vw * (-0.1 + i * 0.22), -vh * 0.05); g.rotate(0.5 + sway);
+    const wdt = vw * (0.10 + 0.05 * (i % 2)), L = Math.hypot(vw, vh) * 1.2;
+    const across = g.createLinearGradient(-wdt, 0, wdt, 0);
+    const a = (0.035 + 0.02 * Math.sin(t * 0.4 + i)) * ease;
+    across.addColorStop(0, 'rgba(255,236,190,0)'); across.addColorStop(0.5, `rgba(255,236,190,${a})`); across.addColorStop(1, 'rgba(255,236,190,0)');
+    g.fillStyle = across; g.fillRect(-wdt, 0, wdt * 2, L);
+    g.restore();
+  }
+  // soft bloom behind the prasad
+  const R = Math.min(vw, vh) * 0.42 * ease;
+  if (R > 1) {
+    const bloom = g.createRadialGradient(cx, cy, 0, cx, cy, R);
+    bloom.addColorStop(0, 'rgba(255,245,190,0.55)'); bloom.addColorStop(0.35, 'rgba(255,225,26,0.22)'); bloom.addColorStop(1, 'rgba(255,200,0,0)');
+    g.fillStyle = bloom; g.fillRect(cx - R, cy - R, R * 2, R * 2);
+  }
+  // glowing rays: two layers turning opposite ways, breathing gently
+  const size = Math.max(vw, vh) * 1.05 * (0.4 + 0.6 * ease);
+  rayLayers.forEach((L, i) => {
+    g.save(); g.translate(cx, cy); g.rotate((reduceMotion ? 0 : t * (i ? -0.035 : 0.05)) + i * 0.3);
+    g.globalAlpha = ease * (0.8 + 0.2 * Math.sin(t * (1.1 + i * 0.7)));
+    g.drawImage(L, -size / 2, -size / 2, size, size); g.restore();
+  });
+  g.globalAlpha = 1;
+  // sparks drifting out of the light
+  for (const s of sparks) {
+    s.life += dt * s.v * 6; s.d += dt * s.v;
+    if (s.life > 1) Object.assign(s, newSpark(), { life: 0 });
+    const d = s.d * Math.min(vw, vh), x = cx + Math.cos(s.a) * d, y = cy + Math.sin(s.a) * d - s.life * 30;
+    const al = Math.sin(s.life * Math.PI) * 0.9 * ease;
+    g.fillStyle = `rgba(255,236,140,${al})`; g.shadowColor = '#ffe11a'; g.shadowBlur = 10;
+    g.beginPath(); g.arc(x, y, s.r, 0, 6.28); g.fill();
+  }
+  // dust motes floating up through the shafts
+  for (const m of motes) {
+    m.y -= m.vy * dt; m.x += (m.vx + Math.sin(t * 0.6 + m.ph) * 0.003) * dt;
+    if (m.y < -0.05) Object.assign(m, newMote(false));
+    const al = (0.25 + 0.35 * Math.sin(t * m.tw + m.ph) ** 2) * ease;
+    g.fillStyle = `rgba(255,240,200,${al})`; g.shadowColor = 'rgba(255,230,150,0.8)'; g.shadowBlur = 6;
+    g.beginPath(); g.arc(m.x * vw, m.y * vh, m.r, 0, 6.28); g.fill();
+  }
+  g.shadowBlur = 0; g.globalCompositeOperation = 'source-over';
+}
+
+/* ================= 3D thekua ================= */
 const canvas = document.getElementById('stage');
 const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
 renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
@@ -27,28 +239,25 @@ renderer.outputColorSpace = THREE.SRGBColorSpace;
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(30, 1, 0.1, 50);
 camera.position.set(0, 0, 5.2);
-
 scene.add(new THREE.HemisphereLight(0xfff1dc, 0x3a2010, 1.6));
-const key = new THREE.DirectionalLight(0xffe2b8, 2.2); key.position.set(-2, 3, 4); scene.add(key);
-const rim = new THREE.DirectionalLight(0xffc87a, 1.4); rim.position.set(3, -1, -3); scene.add(rim);
+const key = new THREE.DirectionalLight(0xffe9a8, 2.4); key.position.set(-2, 3, 4); scene.add(key);
+const back = new THREE.DirectionalLight(0xffe11a, 1.6); back.position.set(0, 0, -4); scene.add(back); // the rays light it from behind
 
 const W = 0.68, D = 0.24;   // half-width, half-thickness (half-height = 1), from the side photos
 const loader = new THREE.TextureLoader();
 const tex = (url) => { const t = loader.load(url); t.colorSpace = THREE.SRGBColorSpace; t.anisotropy = 4; return t; };
 const sideTex = tex('assets/side.png'), topTex = tex('assets/top.png');
 
-// Triplanar blend of real photos: face photo where the surface faces the camera,
-// side photo on the left/right rim, top photo on the top/bottom rim. Weights follow the
-// surface normal, so face -> rim -> other face fades smoothly instead of stretching pixels.
+// Triplanar blend of real photos: face photo where the surface faces you, side photo on the
+// left/right rim, top photo on the top/bottom rim, weighted by surface normal so they fade.
 function half(phiStart, faceUrl, mirror) {
-  const g = new THREE.SphereGeometry(1, 128, 96, phiStart, Math.PI);
-  const p = g.attributes.position;
+  const geo = new THREE.SphereGeometry(1, 128, 96, phiStart, Math.PI);
+  const p = geo.attributes.position;
   for (let i = 0; i < p.count; i++) {
     const x = p.getX(i), y = p.getY(i), z = p.getZ(i);
-    // puffy cookie: flat faces, rounded rim, slightly narrower at the tip like the photo
-    p.setXYZ(i, x * W * (1 - 0.08 * y), y, Math.sign(z) * Math.pow(Math.abs(z), 0.55) * D);
+    p.setXYZ(i, x * W * (1 - 0.08 * y), y, Math.sign(z) * Math.pow(Math.abs(z), 0.55) * D); // puffy cookie
   }
-  g.computeVertexNormals();
+  geo.computeVertexNormals();
   const face = tex(faceUrl);
   const mat = new THREE.MeshStandardMaterial({ map: face, bumpMap: face, bumpScale: 4, roughness: 0.9, metalness: 0 });
   mat.onBeforeCompile = (s) => {
@@ -70,76 +279,95 @@ uniform sampler2D uFace, uSide, uTop; float gH;
         vec4 c = texture2D(uFace, uvF) * w.z + texture2D(uSide, uvS) * w.x + texture2D(uTop, uvT) * w.y;
         diffuseColor *= c;
         gH = dot(c.rgb, vec3(0.299, 0.587, 0.114));`)
-      // bump from the blended colour, so the rim gets relief from its own photo too
       .replace('dHdxy_fwd()', 'vec2(dFdx(gH), dFdy(gH)) * bumpScale * 0.25');
   };
-  return new THREE.Mesh(g, mat);
+  return new THREE.Mesh(geo, mat);
 }
 const thekua = new THREE.Group();
 thekua.add(half(0, 'assets/front.png', false), half(Math.PI, 'assets/back.png', true));
 scene.add(thekua);
 
+let visH = 1, baseScale = 1;
 function resize() {
   const w = innerWidth, h = innerHeight;
   renderer.setSize(w, h, false);
   camera.aspect = w / h; camera.updateProjectionMatrix();
-  const visH = 2 * camera.position.z * Math.tan(THREE.MathUtils.degToRad(camera.fov / 2)), visW = visH * camera.aspect;
-  thekua.scale.setScalar(Math.min(visH * 0.55, visW * 0.8 / W) / 2); // ~55% of screen height
+  visH = 2 * camera.position.z * Math.tan(THREE.MathUtils.degToRad(camera.fov / 2));
+  baseScale = Math.min(visH * 0.32, visH * camera.aspect * 0.55 / W) / 2;
+  thekua.position.y = visH * (0.5 - CY);
 }
 addEventListener('resize', resize); resize();
 
 /* rotation: drag (with inertia) + phone tilt + idle sway */
 const rot = { yaw: 0, pitch: 0, vYaw: 0, vPitch: 0 }, tilt = { x: 0, y: 0 }, cur = { x: 0, y: 0 };
-let dragging = false, last = null, base = null, motionSeen = false;
+let dragging = false, last = null, downAt = null, base = null, motionSeen = false;
 const clampPitch = (v) => Math.max(-1.4, Math.min(1.4, v));
-canvas.addEventListener('pointerdown', (e) => { dragging = true; last = e; canvas.setPointerCapture(e.pointerId); askMotion(); });
+canvas.addEventListener('pointerdown', (e) => { dragging = true; last = downAt = e; canvas.setPointerCapture(e.pointerId); askMotion(); });
 canvas.addEventListener('pointermove', (e) => {
   if (!dragging) return;
   rot.vYaw = (e.clientX - last.clientX) * 0.012; rot.vPitch = (e.clientY - last.clientY) * 0.012;
   rot.yaw += rot.vYaw; rot.pitch = clampPitch(rot.pitch + rot.vPitch); last = e;
 });
-const endDrag = () => { dragging = false; };
-canvas.addEventListener('pointerup', endDrag); canvas.addEventListener('pointercancel', endDrag);
-canvas.addEventListener('dblclick', () => { base = null; rot.yaw = rot.pitch = 0; }); // recenter
+canvas.addEventListener('pointerup', (e) => {
+  dragging = false;
+  // a tap (not a drag) far from the prasad dismisses, like tapping outside a modal
+  const moved = Math.hypot(e.clientX - downAt.clientX, e.clientY - downAt.clientY);
+  const far = Math.hypot(e.clientX - innerWidth / 2, e.clientY - innerHeight * CY) > innerHeight * 0.3;
+  if (moved < 6 && far) hide();
+});
+canvas.addEventListener('pointercancel', () => { dragging = false; });
+canvas.addEventListener('dblclick', () => { base = null; rot.yaw = rot.pitch = 0; });
 
-// iOS only gives motion after a tap; Android needs nothing.
-let asked = false;
+let asked = false;   // iOS gives motion only after a tap; Android needs nothing
 function askMotion() {
   if (asked || typeof DeviceOrientationEvent === 'undefined' || typeof DeviceOrientationEvent.requestPermission !== 'function') return;
   asked = true; DeviceOrientationEvent.requestPermission().catch(() => {});
 }
-
 addEventListener('deviceorientation', (e) => {
   if (e.gamma == null) return;
   let lr = e.gamma, fb = e.beta;
   const a = (screen.orientation && screen.orientation.angle) || window.orientation || 0;
   if (a === 90) [lr, fb] = [fb, -lr]; else if (a === 270 || a === -90) [lr, fb] = [-fb, lr];
-  if (!base) base = { lr, fb };                     // the angle you hold it at = straight
+  if (!base) base = { lr, fb };                    // the angle you hold it at = straight
   const c = (v, m) => Math.max(-m, Math.min(m, v));
-  tilt.y = c(lr - base.lr, 80) * 1.8 * Math.PI / 180; // ~50° tilt shows the rim, more shows the back
+  tilt.y = c(lr - base.lr, 80) * 1.8 * Math.PI / 180;
   tilt.x = c(fb - base.fb, 60) * 1.2 * Math.PI / 180;
   motionSeen = true;
 });
 
+/* ================= flow ================= */
 const clock = new THREE.Clock();
-let intro = 0;
+function show() {
+  base = null; Object.assign(rot, { yaw: 0, pitch: 0, vYaw: 0, vPitch: 0 }); cur.x = cur.y = 0;
+  clock.getDelta(); shownAt = clock.elapsedTime; open = true;
+  ov.classList.add('show'); ov.setAttribute('aria-hidden', 'false');
+}
+function hide() {
+  ov.classList.remove('show'); ov.setAttribute('aria-hidden', 'true');
+  setTimeout(() => { open = false; }, 700);
+}
+document.getElementById('close').addEventListener('click', hide);
+document.getElementById('reopen').addEventListener('click', () => { askMotion(); show(); });
+setTimeout(show, 700);   // present the prasad shortly after the store loads
+
 function frame() {
+  requestAnimationFrame(frame);
+  if (!open) return;
   const dt = Math.min(clock.getDelta(), 0.05), t = clock.elapsedTime;
-  if (!dragging) {                                   // inertia
+  drawFx(t, dt);
+  if (!dragging) {
     rot.yaw += rot.vYaw; rot.pitch = clampPitch(rot.pitch + rot.vPitch);
     rot.vYaw *= 0.94; rot.vPitch *= 0.94; rot.pitch *= 0.985;
   }
-  intro = Math.min(1, intro + dt / 1.6);
-  const e = 1 - Math.pow(1 - intro, 3);
+  const k = Math.min(1, (t - shownAt) / 1.6), e = 1 - Math.pow(1 - k, 3);
   const sway = motionSeen ? 0 : Math.sin(t * 0.8) * 0.35;
   cur.y += (rot.yaw + tilt.y + sway - cur.y) * 0.12;
   cur.x += (rot.pitch + tilt.x - cur.x) * 0.12;
   thekua.rotation.set(cur.x, cur.y - (1 - e) * Math.PI * 2, 0);
-  thekua.position.z = -3 * (1 - e);
+  thekua.scale.setScalar(baseScale * (0.3 + 0.7 * e));
   renderer.render(scene, camera);
-  requestAnimationFrame(frame);
 }
-requestAnimationFrame(frame);
+clock.getDelta(); requestAnimationFrame(frame);
 </script>
 </body>
 </html>
