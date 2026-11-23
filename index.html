@@ -312,6 +312,7 @@ async function openBox() {
     base = null; rot.yaw = rot.pitch = rot.vYaw = rot.vPitch = 0; intro = 0; cur.x = cur.y = 0;
     open = true; overlay.classList.add('show'); overlay.setAttribute('aria-hidden', 'false');
     shower(); busy = false;
+    setTimeout(() => { if (!motionSeen) chip.lastElementChild.textContent = 'No motion sensor here: drag to turn'; }, 2500);
   }, 1100);
 }
 $('open').addEventListener('click', () => {
