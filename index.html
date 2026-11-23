@@ -3,164 +3,24 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#1c120b">
-<title>Chhath Prasad</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<meta name="theme-color" content="#2a1a10">
+<title>Thekua</title>
 <style>
-:root{
-  --bg:#1c120b; --bg2:#2a1a10; --panel:#33200f; --line:#4a3020;
-  --gold:#e6b872; --gold-2:#b98140; --gold-3:#8a5a2b;
-  --cream:#f7e9d2; --muted:#bfa184; --crust:#7a4220;
-}
-*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
-html,body{height:100%}
-html{background:var(--bg)}
-body{
-  background:radial-gradient(120% 70% at 50% 18%,#4a2c17 0%,var(--bg2) 45%,var(--bg) 100%) fixed;
-  color:var(--cream);font-family:Inter,system-ui,sans-serif;overflow-x:hidden;
-}
-.app{max-width:440px;margin:0 auto;min-height:100%;padding:calc(env(safe-area-inset-top) + 16px) 16px 32px;position:relative}
-
-/* top bar */
-.top{display:flex;align-items:center;height:44px}
-.back{width:40px;height:40px;border-radius:50%;border:1.5px solid #ffffff55;display:grid;place-items:center;color:var(--cream);background:none}
-
-/* hero */
-h1{font-family:"Cormorant Garamond",serif;font-weight:700;font-size:44px;line-height:1.05;text-align:center;margin-top:18px;
-  background:linear-gradient(180deg,#fff2d8 0%,var(--gold) 55%,var(--gold-2) 100%);-webkit-background-clip:text;background-clip:text;color:transparent;position:relative}
-h1::before{content:"\2726";position:absolute;left:9%;top:-6px;font-size:20px;color:#fff3d6;text-shadow:0 0 10px #ffd99a;-webkit-text-fill-color:#fff3d6}
-.sub{text-align:center;color:var(--muted);font-size:14px;margin-top:8px;letter-spacing:.02em}
-
-/* box scene */
-.scene{position:relative;height:300px;margin:18px auto 6px;perspective:900px}
-.glow{position:absolute;left:50%;top:44%;width:300px;height:300px;transform:translate(-50%,-50%);
-  background:radial-gradient(circle,#ffd99a66 0%,#e6b87222 35%,transparent 65%);pointer-events:none;transition:opacity .6s,transform .9s}
-.box{position:absolute;left:50%;bottom:22px;width:250px;height:150px;transform:translateX(-50%);transform-style:preserve-3d}
-.box-back{position:absolute;inset:0;border-radius:10px;background:linear-gradient(180deg,#3e2614,#24150b)}
-.card{position:absolute;left:50%;bottom:44px;width:180px;height:130px;transform:translateX(-50%);border-radius:12px;
-  background:linear-gradient(145deg,#f3d39a 0%,#d9a35b 45%,#b77d3a 100%);box-shadow:0 0 40px #ffcf8a55,inset 0 0 0 1px #fff4;
-  display:grid;place-items:center;transition:transform 1s cubic-bezier(.2,.8,.2,1)}
-.card::before{content:"";position:absolute;inset:8px;border:1px solid #fff6;border-radius:8px}
-.card img{width:64px;filter:drop-shadow(0 6px 10px #0006);transition:transform .8s}
-.box-front{position:absolute;left:-6px;right:-6px;bottom:0;height:96px;border-radius:6px 6px 12px 12px;
-  background:linear-gradient(180deg,#3a2312 0%,#1f130a 100%);box-shadow:0 18px 40px #0009,inset 0 1px 0 #ffffff14;overflow:hidden}
-.box-front::before{ /* gold ribbon swoosh */
-  content:"";position:absolute;left:-30%;top:-40%;width:160%;height:70%;
-  border-bottom:10px solid var(--gold-2);border-radius:0 0 50% 50%;transform:rotate(-14deg);opacity:.9;filter:drop-shadow(0 2px 2px #0006)}
-.box-front .seal{position:absolute;left:50%;top:48px;transform:translate(-50%,-50%);width:38px;height:38px;border-radius:50%;
-  background:radial-gradient(circle at 35% 30%,#ffe3a8,var(--gold-2) 60%,var(--gold-3));box-shadow:0 2px 8px #0008;display:grid;place-items:center;color:#5a3412;font-size:18px}
-.lid{position:absolute;left:-10px;right:-10px;bottom:90px;height:26px;border-radius:6px;transform-origin:50% 100% -10px;
-  background:linear-gradient(180deg,#4a2d17,#2c1a0d);box-shadow:0 6px 14px #0008,inset 0 1px 0 #ffffff1c;transition:transform .9s cubic-bezier(.3,1.4,.4,1),opacity .9s}
-.lid::after{content:"";position:absolute;left:50%;top:0;bottom:0;width:22px;transform:translateX(-50%);background:linear-gradient(90deg,var(--gold-3),var(--gold),var(--gold-3))}
-.leaf{position:absolute;right:18px;bottom:110px;width:56px;height:110px;opacity:.85;transition:opacity .5s}
-.cube{position:absolute;width:30px;height:30px;border-radius:5px;background:linear-gradient(135deg,#f0c985,#a8712f);box-shadow:0 6px 16px #0007;animation:float 6s ease-in-out infinite}
-@keyframes float{50%{transform:translateY(-10px) rotate(8deg)}}
-
-/* opened state */
-.opened .lid{transform:translateY(-70px) rotateX(-130deg);opacity:0}
-.opened .card{transform:translateX(-50%) translateY(-70px) scale(1.06)}
-.opened .card img{transform:scale(1.4) rotate(-8deg)}
-.opened .glow{transform:translate(-50%,-60%) scale(1.6);opacity:1}
-.shake .box{animation:shake .5s}
-@keyframes shake{20%{transform:translateX(-50%) rotate(-3deg)}40%{transform:translateX(-50%) rotate(3deg)}60%{transform:translateX(-50%) rotate(-2deg)}80%{transform:translateX(-50%) rotate(1deg)}}
-
-.lead{text-align:center;color:var(--cream);font-size:15px;margin:6px 0 14px;opacity:.9}
-
-/* days list */
-.list{display:grid;gap:10px}
-.row{display:flex;align-items:center;gap:14px;padding:14px 16px;border-radius:10px;background:#ffffff0a;border:1px solid #ffffff0d}
-.row:nth-child(odd){background:#ffffff12}
-.medal{flex:none;width:38px;height:38px;border-radius:10px;transform:rotate(45deg) scale(.82);
-  background:linear-gradient(135deg,#ffe2a6,var(--gold-2));box-shadow:0 4px 10px #0007;display:grid;place-items:center}
-.medal span{transform:rotate(-45deg);font:700 15px "Cormorant Garamond",serif;color:#4a2a10}
-.row b{font-weight:600;font-size:16px;display:block}
-.row small{color:var(--muted);font-size:12.5px}
-.row em{margin-left:auto;font-style:normal;color:var(--muted);font-size:13px;white-space:nowrap}
-
-.cta{display:block;width:100%;margin:24px 0 10px;height:56px;border:0;border-radius:28px;font:600 17px Inter,sans-serif;color:#3d230c;
-  background:linear-gradient(90deg,#c99456,#f0cf95 50%,#c99456);box-shadow:0 10px 30px #e6b87233,inset 0 1px 0 #fff8;cursor:pointer}
-.cta:active{transform:scale(.98)}
-.hint{text-align:center;font-size:12.5px;color:var(--muted)}
-
-/* overlay */
-.overlay{position:fixed;inset:0;z-index:10;display:grid;place-items:center;visibility:hidden;opacity:0;transition:opacity .6s,visibility 0s .6s;
-  background:radial-gradient(80% 60% at 50% 42%,#3b2312ee,#120a05f5);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
-.overlay.show{visibility:visible;opacity:1;transition:opacity .6s}
-.rays{position:absolute;left:50%;top:42%;width:150vmax;height:150vmax;transform:translate(-50%,-50%);pointer-events:none;
-  background:repeating-conic-gradient(from 0deg,#ffd99a22 0deg 4deg,transparent 4deg 14deg);
-  -webkit-mask:radial-gradient(circle,#000 0%,#0008 18%,transparent 42%);mask:radial-gradient(circle,#000 0%,#0008 18%,transparent 42%);
-  animation:spin 40s linear infinite}
-.halo{position:absolute;left:50%;top:42%;width:340px;height:340px;transform:translate(-50%,-50%);border-radius:50%;
-  background:radial-gradient(circle,#ffdca088 0%,#e6b87233 40%,transparent 70%);pointer-events:none}
-@keyframes spin{to{transform:translate(-50%,-50%) rotate(360deg)}}
-#stage{position:absolute;inset:0;width:100%;height:100%;touch-action:none;cursor:grab}
-.ov-text{position:absolute;left:0;right:0;bottom:calc(env(safe-area-inset-bottom) + 28px);text-align:center;padding:0 24px;pointer-events:none}
-.ov-text h2{font:700 32px "Cormorant Garamond",serif;color:var(--gold)}
-.ov-text p{color:var(--cream);opacity:.85;font-size:14px;margin-top:4px}
-.chip{display:inline-flex;gap:6px;align-items:center;margin-top:12px;padding:6px 12px;border-radius:20px;background:#ffffff14;font-size:12px;color:var(--muted)}
-.chip i{width:7px;height:7px;border-radius:50%;background:#777}
-.chip.on i{background:#8fd48a;box-shadow:0 0 6px #8fd48a}
-.ov-text .cta{pointer-events:auto;max-width:280px;margin:18px auto 0}
-#petals{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:20}
+:root{color-scheme:dark;--bg-top:#3a2414;--bg-bottom:#1a100a}
+html,body{height:100%;margin:0;overflow:hidden;background:var(--bg-bottom)}
+body{background:radial-gradient(90% 70% at 50% 45%,var(--bg-top),var(--bg-bottom))}
+#stage{display:block;width:100%;height:100%;touch-action:none;cursor:grab}
+#stage:active{cursor:grabbing}
 </style>
 </head>
 <body>
-<main class="app" id="app">
-  <div class="top"><button class="back" aria-label="Back"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 6l-6 6 6 6"/></svg></button></div>
-
-  <h1>Chhath Prasad</h1>
-  <p class="sub">A blessing from Chhathi Maiya awaits you</p>
-
-  <div class="scene" id="scene">
-    <div class="glow"></div>
-    <div class="cube" style="left:2px;top:120px"></div>
-    <div class="cube" style="right:4px;top:40px;width:24px;height:24px;animation-delay:-2s"></div>
-    <svg class="leaf" viewBox="0 0 60 120" aria-hidden="true"><g fill="#d9a35b"><path d="M30 118V10" stroke="#c9934c" stroke-width="2"/><ellipse cx="20" cy="30" rx="7" ry="14" transform="rotate(-30 20 30)"/><ellipse cx="40" cy="44" rx="7" ry="14" transform="rotate(30 40 44)"/><ellipse cx="20" cy="60" rx="7" ry="14" transform="rotate(-30 20 60)"/><ellipse cx="40" cy="74" rx="7" ry="14" transform="rotate(30 40 74)"/><ellipse cx="30" cy="12" rx="6" ry="12"/></g></svg>
-    <div class="box">
-      <div class="box-back"></div>
-      <div class="card"><img src="assets/front-cut.png" alt="Thekua"></div>
-      <div class="lid"></div>
-      <div class="box-front"><div class="seal">&#x0950;</div></div>
-    </div>
-  </div>
-
-  <p class="lead">Offered with devotion across four sacred days</p>
-  <div class="list">
-    <div class="row"><div class="medal"><span>1</span></div><div><b>Nahay Khay</b><small>Holy bath and first pure meal</small></div><em>Day 1</em></div>
-    <div class="row"><div class="medal"><span>2</span></div><div><b>Kharna</b><small>Day-long fast, kheer at dusk</small></div><em>Day 2</em></div>
-    <div class="row"><div class="medal"><span>3</span></div><div><b>Sandhya Arghya</b><small>Offering to the setting sun</small></div><em>Day 3</em></div>
-    <div class="row"><div class="medal"><span>4</span></div><div><b>Usha Arghya</b><small>Offering to the rising sun</small></div><em>Day 4</em></div>
-  </div>
-
-  <button class="cta" id="open">Open Your Prasad</button>
-  <p class="hint" id="hint">Tap the button, or shake your phone</p>
-</main>
-
-<div class="overlay" id="overlay" aria-hidden="true">
-  <div class="rays"></div><div class="halo"></div>
-  <canvas id="stage" aria-label="3D thekua, tilt your phone or drag to turn it"></canvas>
-  <div class="ov-text">
-    <h2>Prasad Received</h2>
-    <p>Tilt your phone or drag to turn the thekua</p>
-    <span class="chip" id="chip"><i></i><span>Motion sensor: waiting</span></span>
-    <button class="cta" id="close">Jai Chhathi Maiya</button>
-  </div>
-</div>
-<canvas id="petals"></canvas>
+<canvas id="stage" aria-label="3D thekua. Tilt your phone or drag to turn it."></canvas>
 
 <script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js"}}</script>
 <script type="module">
 import * as THREE from 'three';
 
-const $ = (id) => document.getElementById(id);
-const app = $('app'), overlay = $('overlay'), chip = $('chip');
-const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
-const needsPermission = typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function';
-if (needsPermission) $('hint').textContent = 'Tap to open, then tilt your phone';
-
-/* ---------- 3D thekua ---------- */
-const canvas = $('stage');
+const canvas = document.getElementById('stage');
 const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
 renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
 renderer.outputColorSpace = THREE.SRGBColorSpace;
@@ -172,20 +32,47 @@ scene.add(new THREE.HemisphereLight(0xfff1dc, 0x3a2010, 1.6));
 const key = new THREE.DirectionalLight(0xffe2b8, 2.2); key.position.set(-2, 3, 4); scene.add(key);
 const rim = new THREE.DirectionalLight(0xffc87a, 1.4); rim.position.set(3, -1, -3); scene.add(rim);
 
-const W = 0.68, D = 0.24;          // half-width and half-thickness relative to half-height 1 (from the side views)
+const W = 0.68, D = 0.24;   // half-width, half-thickness (half-height = 1), from the side photos
 const loader = new THREE.TextureLoader();
-function half(phiStart, url, mirror) {
+const tex = (url) => { const t = loader.load(url); t.colorSpace = THREE.SRGBColorSpace; t.anisotropy = 4; return t; };
+const sideTex = tex('assets/side.png'), topTex = tex('assets/top.png');
+
+// Triplanar blend of real photos: face photo where the surface faces the camera,
+// side photo on the left/right rim, top photo on the top/bottom rim. Weights follow the
+// surface normal, so face -> rim -> other face fades smoothly instead of stretching pixels.
+function half(phiStart, faceUrl, mirror) {
   const g = new THREE.SphereGeometry(1, 128, 96, phiStart, Math.PI);
-  const p = g.attributes.position, uv = g.attributes.uv;
+  const p = g.attributes.position;
   for (let i = 0; i < p.count; i++) {
     const x = p.getX(i), y = p.getY(i), z = p.getZ(i);
-    // puffy cookie: flat faces, rounded rim; slightly narrower at the tip like the photo
-    p.setXYZ(i, x * W * (1 - 0.08 * y), y * 1.0, Math.sign(z) * Math.pow(Math.abs(z), 0.55) * D);
-    uv.setXY(i, 0.5 + (mirror ? -x : x) * 0.47, 0.5 + y * 0.47); // 0.47 < 0.5: rim samples crust, not the cut edge
+    // puffy cookie: flat faces, rounded rim, slightly narrower at the tip like the photo
+    p.setXYZ(i, x * W * (1 - 0.08 * y), y, Math.sign(z) * Math.pow(Math.abs(z), 0.55) * D);
   }
   g.computeVertexNormals();
-  const tex = loader.load(url); tex.colorSpace = THREE.SRGBColorSpace; tex.anisotropy = 4;
-  const mat = new THREE.MeshStandardMaterial({ map: tex, bumpMap: tex, bumpScale: 4, roughness: 0.9, metalness: 0 });
+  const face = tex(faceUrl);
+  const mat = new THREE.MeshStandardMaterial({ map: face, bumpMap: face, bumpScale: 4, roughness: 0.9, metalness: 0 });
+  mat.onBeforeCompile = (s) => {
+    Object.assign(s.uniforms, { uFace: { value: face }, uSide: { value: sideTex }, uTop: { value: topTex } });
+    s.vertexShader = 'varying vec3 vObjPos; varying vec3 vObjN;\n' + s.vertexShader.replace(
+      '#include <begin_vertex>', '#include <begin_vertex>\nvObjPos = position; vObjN = normal;');
+    s.fragmentShader = `varying vec3 vObjPos; varying vec3 vObjN;
+uniform sampler2D uFace, uSide, uTop; float gH;
+` + s.fragmentShader
+      .replace('#include <map_fragment>', `
+        vec3 q = vObjPos;
+        float xu = q.x / (${W.toFixed(3)} * (1.0 - 0.08 * q.y));
+        float zu = q.z / ${D.toFixed(3)};
+        vec2 uvF = vec2(0.5 + ${mirror ? '-' : ''}xu * 0.47, 0.5 + q.y * 0.47);
+        vec2 uvS = vec2(0.5 + zu * 0.3, 0.5 + q.y * 0.4);
+        vec2 uvT = vec2(0.5 + xu * 0.42, 0.5 + zu * 0.3);
+        vec3 w = pow(abs(normalize(vObjN)), vec3(3.0));
+        w /= (w.x + w.y + w.z);
+        vec4 c = texture2D(uFace, uvF) * w.z + texture2D(uSide, uvS) * w.x + texture2D(uTop, uvT) * w.y;
+        diffuseColor *= c;
+        gH = dot(c.rgb, vec3(0.299, 0.587, 0.114));`)
+      // bump from the blended colour, so the rim gets relief from its own photo too
+      .replace('dHdxy_fwd()', 'vec2(dFdx(gH), dFdy(gH)) * bumpScale * 0.25');
+  };
   return new THREE.Mesh(g, mat);
 }
 const thekua = new THREE.Group();
@@ -197,149 +84,62 @@ function resize() {
   renderer.setSize(w, h, false);
   camera.aspect = w / h; camera.updateProjectionMatrix();
   const visH = 2 * camera.position.z * Math.tan(THREE.MathUtils.degToRad(camera.fov / 2)), visW = visH * camera.aspect;
-  thekua.scale.setScalar(Math.min(visH * 0.36, visW * 0.8 / W) / 2); // ~36% of screen height
-  thekua.position.y = visH * 0.08;                  // centre on the halo, above the text
+  thekua.scale.setScalar(Math.min(visH * 0.55, visW * 0.8 / W) / 2); // ~55% of screen height
 }
 addEventListener('resize', resize); resize();
 
-/* rotation: drag (with inertia) + phone tilt offset + idle sway */
+/* rotation: drag (with inertia) + phone tilt + idle sway */
 const rot = { yaw: 0, pitch: 0, vYaw: 0, vPitch: 0 }, tilt = { x: 0, y: 0 }, cur = { x: 0, y: 0 };
-let dragging = false, last = null, base = null, motionSeen = false, intro = 0, open = false;
-canvas.addEventListener('pointerdown', (e) => { dragging = true; last = e; canvas.setPointerCapture(e.pointerId); });
+let dragging = false, last = null, base = null, motionSeen = false;
+const clampPitch = (v) => Math.max(-1.4, Math.min(1.4, v));
+canvas.addEventListener('pointerdown', (e) => { dragging = true; last = e; canvas.setPointerCapture(e.pointerId); askMotion(); });
 canvas.addEventListener('pointermove', (e) => {
   if (!dragging) return;
   rot.vYaw = (e.clientX - last.clientX) * 0.012; rot.vPitch = (e.clientY - last.clientY) * 0.012;
-  rot.yaw += rot.vYaw; rot.pitch = Math.max(-1.4, Math.min(1.4, rot.pitch + rot.vPitch)); last = e;
+  rot.yaw += rot.vYaw; rot.pitch = clampPitch(rot.pitch + rot.vPitch); last = e;
 });
 const endDrag = () => { dragging = false; };
 canvas.addEventListener('pointerup', endDrag); canvas.addEventListener('pointercancel', endDrag);
 canvas.addEventListener('dblclick', () => { base = null; rot.yaw = rot.pitch = 0; }); // recenter
+
+// iOS only gives motion after a tap; Android needs nothing.
+let asked = false;
+function askMotion() {
+  if (asked || typeof DeviceOrientationEvent === 'undefined' || typeof DeviceOrientationEvent.requestPermission !== 'function') return;
+  asked = true; DeviceOrientationEvent.requestPermission().catch(() => {});
+}
 
 addEventListener('deviceorientation', (e) => {
   if (e.gamma == null) return;
   let lr = e.gamma, fb = e.beta;
   const a = (screen.orientation && screen.orientation.angle) || window.orientation || 0;
   if (a === 90) [lr, fb] = [fb, -lr]; else if (a === 270 || a === -90) [lr, fb] = [-fb, lr];
-  if (!base) base = { lr, fb };                     // whatever angle you hold it at = neutral
+  if (!base) base = { lr, fb };                     // the angle you hold it at = straight
   const c = (v, m) => Math.max(-m, Math.min(m, v));
-  tilt.y = c(lr - base.lr, 80) * 1.8 * Math.PI / 180;  // 50° tilt shows the edge, more shows the back
+  tilt.y = c(lr - base.lr, 80) * 1.8 * Math.PI / 180; // ~50° tilt shows the rim, more shows the back
   tilt.x = c(fb - base.fb, 60) * 1.2 * Math.PI / 180;
-  if (!motionSeen) { motionSeen = true; chip.classList.add('on'); chip.lastElementChild.textContent = 'Motion sensor: on'; }
+  motionSeen = true;
 });
 
 const clock = new THREE.Clock();
+let intro = 0;
 function frame() {
   const dt = Math.min(clock.getDelta(), 0.05), t = clock.elapsedTime;
-  if (open) {
-    if (!dragging) {                                 // inertia
-      rot.yaw += rot.vYaw; rot.pitch = Math.max(-1.4, Math.min(1.4, rot.pitch + rot.vPitch));
-      rot.vYaw *= 0.94; rot.vPitch *= 0.94; rot.pitch *= 0.985;
-    }
-    intro = Math.min(1, intro + dt / 1.6);
-    const e = 1 - Math.pow(1 - intro, 3);
-    const sway = motionSeen ? 0 : Math.sin(t * 0.8) * 0.35;
-    cur.y += (rot.yaw + tilt.y + sway - cur.y) * 0.12;
-    cur.x += (rot.pitch + tilt.x - cur.x) * 0.12;
-    thekua.rotation.set(cur.x, cur.y - (1 - e) * Math.PI * 2, 0);
-    thekua.position.z = -3 * (1 - e) + Math.sin(t * 1.4) * 0.04;
-    renderer.render(scene, camera);
+  if (!dragging) {                                   // inertia
+    rot.yaw += rot.vYaw; rot.pitch = clampPitch(rot.pitch + rot.vPitch);
+    rot.vYaw *= 0.94; rot.vPitch *= 0.94; rot.pitch *= 0.985;
   }
+  intro = Math.min(1, intro + dt / 1.6);
+  const e = 1 - Math.pow(1 - intro, 3);
+  const sway = motionSeen ? 0 : Math.sin(t * 0.8) * 0.35;
+  cur.y += (rot.yaw + tilt.y + sway - cur.y) * 0.12;
+  cur.x += (rot.pitch + tilt.x - cur.x) * 0.12;
+  thekua.rotation.set(cur.x, cur.y - (1 - e) * Math.PI * 2, 0);
+  thekua.position.z = -3 * (1 - e);
+  renderer.render(scene, camera);
   requestAnimationFrame(frame);
 }
 requestAnimationFrame(frame);
-
-/* ---------- petals (gentle, falling — not bursts) ---------- */
-const pc = $('petals'), ctx = pc.getContext('2d');
-let petals = [], trickle = null;
-function sizePetals() { pc.width = innerWidth * devicePixelRatio; pc.height = innerHeight * devicePixelRatio; ctx.setTransform(devicePixelRatio, 0, 0, devicePixelRatio, 0, 0); }
-addEventListener('resize', sizePetals); sizePetals();
-const KINDS = [
-  { c1: '#ffb21f', c2: '#e0700c', w: 7, h: 13 },  // marigold
-  { c1: '#ffc94d', c2: '#f08a10', w: 6, h: 11 },  // marigold, lighter
-  { c1: '#d6424e', c2: '#8e1c2a', w: 9, h: 12 },  // rose
-  { c1: '#f6c6c9', c2: '#d9838c', w: 8, h: 11 },  // pale rose
-];
-function addPetal(x, y, vx = 0, vy = 0) {
-  const k = KINDS[(Math.random() * KINDS.length) | 0], s = 0.8 + Math.random() * 0.8;
-  petals.push({ x, y, vx, vy, k, s, a: Math.random() * 6.28, va: (Math.random() - 0.5) * 2, f: Math.random() * 6.28, vf: 2 + Math.random() * 3, ph: Math.random() * 6.28, life: 0 });
-}
-function addMote() { petals.push({ mote: true, x: Math.random() * innerWidth, y: innerHeight + 10, vy: -(20 + Math.random() * 30), r: 1 + Math.random() * 2, ph: Math.random() * 6.28, life: 0 }); }
-function shower() {
-  const n = reduceMotion ? 20 : 70, cx = innerWidth / 2, cy = innerHeight * 0.42;
-  for (let i = 0; i < n / 2; i++) {                 // soft bloom from the prasad, then drifts down
-    const a = Math.random() * Math.PI * 2, sp = 40 + Math.random() * 110;
-    addPetal(cx, cy, Math.cos(a) * sp, Math.sin(a) * sp - 40);
-  }
-  for (let i = 0; i < n / 2; i++) addPetal(Math.random() * innerWidth, -20 - Math.random() * innerHeight * 0.8, 0, 30 + Math.random() * 30);
-  clearInterval(trickle);
-  trickle = setInterval(() => { addPetal(Math.random() * innerWidth, -20, 0, 35); if (Math.random() < 0.6) addMote(); }, reduceMotion ? 1500 : 450);
-}
-let pt = performance.now();
-function drawPetals(now) {
-  const dt = Math.min((now - pt) / 1000, 0.05); pt = now;
-  ctx.clearRect(0, 0, innerWidth, innerHeight);
-  petals = petals.filter((p) => p.y < innerHeight + 40 && p.y > -innerHeight && p.life < 20);
-  for (const p of petals) {
-    p.life += dt;
-    if (p.mote) {
-      p.y += p.vy * dt; p.x += Math.sin(p.life * 2 + p.ph) * 0.3;
-      const al = Math.min(1, p.life) * (0.5 + 0.5 * Math.sin(p.life * 4 + p.ph));
-      ctx.fillStyle = `rgba(255,214,140,${al})`; ctx.shadowColor = '#ffcc77'; ctx.shadowBlur = 8;
-      ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, 6.28); ctx.fill(); ctx.shadowBlur = 0; continue;
-    }
-    p.vx *= 1 - 1.6 * dt; p.vy += (38 - p.vy) * 1.2 * dt;  // air drag towards a slow terminal fall
-    p.x += (p.vx + Math.sin(p.life * 1.5 + p.ph) * 22) * dt; p.y += p.vy * dt;
-    p.a += p.va * dt; p.f += p.vf * dt;
-    ctx.save(); ctx.translate(p.x, p.y); ctx.rotate(p.a); ctx.scale(Math.cos(p.f) * p.s, p.s);
-    const g = ctx.createLinearGradient(0, -p.k.h, 0, p.k.h); g.addColorStop(0, p.k.c1); g.addColorStop(1, p.k.c2);
-    ctx.fillStyle = g; ctx.globalAlpha = Math.min(1, p.life * 3) * 0.95;
-    ctx.beginPath(); ctx.moveTo(0, -p.k.h);                         // teardrop petal
-    ctx.bezierCurveTo(p.k.w, -p.k.h * 0.4, p.k.w, p.k.h * 0.6, 0, p.k.h);
-    ctx.bezierCurveTo(-p.k.w, p.k.h * 0.6, -p.k.w, -p.k.h * 0.4, 0, -p.k.h); ctx.fill();
-    ctx.restore();
-  }
-  requestAnimationFrame(drawPetals);
-}
-requestAnimationFrame(drawPetals);
-
-/* ---------- open / close flow ---------- */
-let busy = false;
-async function openBox() {
-  if (busy || open) return; busy = true;
-  app.classList.add('shake');
-  setTimeout(() => app.classList.add('opened'), 350);
-  setTimeout(() => {
-    base = null; rot.yaw = rot.pitch = rot.vYaw = rot.vPitch = 0; intro = 0; cur.x = cur.y = 0;
-    open = true; overlay.classList.add('show'); overlay.setAttribute('aria-hidden', 'false');
-    shower(); busy = false;
-    setTimeout(() => { if (!motionSeen) chip.lastElementChild.textContent = 'No motion sensor here: drag to turn'; }, 2500);
-  }, 1100);
-}
-$('open').addEventListener('click', () => {
-  if (needsPermission) {                            // iOS: must be asked inside the tap
-    DeviceOrientationEvent.requestPermission().catch(() => {});
-    if (DeviceMotionEvent.requestPermission) DeviceMotionEvent.requestPermission().catch(() => {});
-  }
-  openBox();
-});
-$('close').addEventListener('click', () => {
-  overlay.classList.remove('show'); overlay.setAttribute('aria-hidden', 'true');
-  clearInterval(trickle); app.classList.remove('opened', 'shake');
-  setTimeout(() => { open = false; petals = []; }, 600);
-  $('open').textContent = 'Open Again';
-});
-
-/* shake to open (Android works without a tap; iOS after the first tap grants permission) */
-let lastAcc = null, shakeHits = 0, shakeT = 0;
-addEventListener('devicemotion', (e) => {
-  const a = e.accelerationIncludingGravity; if (!a || a.x == null || open) return;
-  if (lastAcc) {
-    const d = Math.abs(a.x - lastAcc.x) + Math.abs(a.y - lastAcc.y) + Math.abs(a.z - lastAcc.z);
-    const now = performance.now();
-    if (d > 28) { if (now - shakeT > 800) shakeHits = 0; shakeHits++; shakeT = now; if (shakeHits >= 3) { shakeHits = 0; openBox(); } }
-  }
-  lastAcc = { x: a.x, y: a.y, z: a.z };
-});
 </script>
 </body>
 </html>

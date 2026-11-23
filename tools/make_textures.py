@@ -1,14 +1,15 @@
 """Cut front/back textures out of assets/thekua-angles.webp (4x3 angle sheet).
 
 Run: python3 tools/make_textures.py
-Writes assets/front.png, assets/back.png (opaque, background bled with crust colour,
+Writes assets/front.png, back.png, side.png (rim seen from the side), top.png (rim seen from above) (opaque, background bled with crust colour,
 used as 3D textures) and assets/front-cut.png (transparent cut-out for 2D use).
 """
 from PIL import Image, ImageFilter
 import numpy as np
 
 SHEET = 'assets/thekua-angles.webp'
-CELLS = {'front': (0, 0), 'back': (1, 1)}  # (row, col) in the sheet
+CELLS = {'front': (0, 0), 'back': (1, 1), 'side': (0, 3), 'top': (2, 1)}  # (row, col) in the sheet
+SIZES = {'front': (512, 768), 'back': (512, 768), 'side': (128, 512), 'top': (512, 192)}
 
 
 def cut(a, r, c):
@@ -42,7 +43,7 @@ def bleed(rgb, alpha, steps=60):
 a = np.asarray(Image.open(SHEET).convert('RGB')).astype(int)
 for name, (r, c) in CELLS.items():
     rgb, alpha = cut(a, r, c)
-    Image.fromarray(bleed(rgb, np.asarray(Image.fromarray(alpha).filter(ImageFilter.MinFilter(9))))).resize((512, 768), Image.LANCZOS).save(f'assets/{name}.png')
+    Image.fromarray(bleed(rgb, np.asarray(Image.fromarray(alpha).filter(ImageFilter.MinFilter(9))))).resize(SIZES[name], Image.LANCZOS).save(f'assets/{name}.png')
     if name == 'front':
         Image.fromarray(np.dstack([rgb.astype('uint8'), alpha])).save('assets/front-cut.png')
 print('ok')
